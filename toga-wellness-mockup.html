@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOGA Wellness Mockup</title>
+    <style>
+      :root {
+        --bg-soft: #f5fbf7;
+        --bg-cloud: #ecf6ff;
+        --text: #112a40;
+        --text-soft: #4a6178;
+        --leaf: #0c9f87;
+        --leaf-soft: #4bc8af;
+        --warn: #f0ac35;
+        --danger: #e06a6c;
+        --card: #ffffff;
+        --shadow: 0 16px 44px rgba(17, 42, 64, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        color: var(--text);
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 10% 15%, rgba(12, 159, 135, 0.09), transparent 38%),
+          radial-gradient(circle at 84% 5%, rgba(240, 172, 53, 0.1), transparent 35%),
+          linear-gradient(160deg, var(--bg-soft), var(--bg-cloud));
+        min-height: 100vh;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(255, 255, 255, 0.85);
+        border-bottom: 1px solid rgba(17, 42, 64, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .wrap {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+      }
+
+      .nav {
+        min-height: 62px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 12px 0;
+      }
+
+      .brand {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--leaf), #24bc9f);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .menu a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .button {
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        transition: transform 0.25s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .primary {
+        color: #fff;
+        background: linear-gradient(130deg, var(--leaf), #31b79e);
+        box-shadow: 0 10px 24px rgba(12, 159, 135, 0.25);
+      }
+
+      .outline {
+        border: 1px solid rgba(17, 42, 64, 0.2);
+        color: var(--text);
+        background: transparent;
+      }
+
+      .cta {
+        display: flex;
+        gap: 10px;
+      }
+
+      .section {
+        padding: 62px 0;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 20px;
+      }
+
+      .badge {
+        display: inline-block;
+        border-radius: 999px;
+        padding: 7px 12px;
+        background: rgba(12, 159, 135, 0.12);
+        color: #0f6e5f;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 12px 0 8px;
+        line-height: 1.1;
+        font-size: clamp(2rem, 4.7vw, 3rem);
+      }
+
+      h2 {
+        margin: 0 0 16px;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+      }
+
+      p {
+        color: var(--text-soft);
+        line-height: 1.65;
+      }
+
+      .hero-card {
+        border-radius: 18px;
+        background: linear-gradient(165deg, #fff, #f5fcff);
+        padding: 20px;
+        border: 1px solid rgba(17, 42, 64, 0.15);
+        box-shadow: var(--shadow);
+        animation: rise 0.8s ease forwards;
+        opacity: 0;
+      }
+
+      .chip-wrap {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        background: rgba(17, 42, 64, 0.06);
+        border-radius: 999px;
+        font-size: 12px;
+        padding: 7px 10px;
+      }
+
+      .stats {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .stat {
+        border-radius: 14px;
+        border: 1px solid rgba(12, 159, 135, 0.16);
+        padding: 14px;
+        background: linear-gradient(180deg, #fff, #f3fcfa);
+      }
+
+      .stat h3 {
+        margin: 0 0 6px;
+        color: var(--leaf);
+        font-size: 32px;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid rgba(17, 42, 64, 0.1);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 10px 24px rgba(17, 42, 64, 0.08);
+        transition: transform 0.24s ease;
+        opacity: 0;
+        transform: translateY(16px);
+        animation: rise 0.6s ease forwards;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+      }
+
+      .grid4 {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .filters {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      select,
+      input,
+      textarea {
+        border: 1px solid rgba(17, 42, 64, 0.2);
+        border-radius: 11px;
+        width: 100%;
+        font: inherit;
+        padding: 12px;
+      }
+
+      .weekbar {
+        margin-top: 12px;
+        border: 1px dashed rgba(12, 159, 135, 0.3);
+        background: rgba(255, 255, 255, 0.84);
+        border-radius: 12px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .weekbar button {
+        min-width: 36px;
+      }
+
+      .week-scroll {
+        margin-top: 10px;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 8px;
+        -ms-overflow-style: none;
+      }
+
+      .week-scroll::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .week-scroll::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        background: rgba(17, 42, 64, 0.26);
+      }
+
+      .week-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 176px);
+        gap: 8px;
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .day-column {
+        padding: 8px;
+        display: grid;
+        gap: 6px;
+        align-content: start;
+        min-width: 176px;
+      }
+
+      .day-title {
+        margin: 0;
+        padding: 8px 6px;
+        border-radius: 10px;
+        background: rgba(17, 42, 64, 0.08);
+        font-weight: 700;
+        text-align: center;
+        font-size: 11px;
+      }
+
+      .day-date {
+        display: block;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-soft);
+      }
+
+      .day-sessions {
+        display: grid;
+        gap: 6px;
+      }
+
+      .session-card {
+        border-radius: 10px;
+        background: linear-gradient(180deg, #fff, #f7fdfb);
+        padding: 8px;
+      }
+
+      .session-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .session-card h3 {
+        margin: 6px 0;
+        font-size: 13px;
+      }
+
+      .session-card .muted2 {
+        margin: 0;
+        font-size: 11px;
+        line-height: 1.35;
+      }
+
+      .status {
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .session-card .button {
+        margin-top: 4px;
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 11px;
+        border-radius: 9px;
+      }
+
+      .status.ok {
+        background: #d8f6ed;
+        color: #0b775d;
+      }
+
+      .status.half {
+        background: #f4e9bb;
+        color: #805f00;
+      }
+
+      .status.full {
+        background: #f8d8dc;
+        color: #9b343a;
+      }
+
+      .muted {
+        color: var(--text-soft);
+      }
+
+      .muted2 {
+        color: #5f6f82;
+        font-size: 13px;
+      }
+
+      .tiny {
+        color: #5f6f82;
+        font-size: 12px;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 12px;
+      }
+
+      .list {
+        margin: 0;
+        padding-left: 16px;
+      }
+
+      .list li {
+        margin-bottom: 8px;
+      }
+
+      .footer {
+        background: linear-gradient(130deg, #0f354d, #0a615f);
+        color: #f5fbff;
+        padding: 28px 0 40px;
+      }
+
+      .foot-inner {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 21, 34, 0.55);
+        z-index: 30;
+        display: none;
+        place-items: center;
+      }
+
+      .overlay.open {
+        display: grid;
+      }
+
+      .drawer {
+        width: min(780px, 92vw);
+        max-height: 90vh;
+        overflow-y: auto;
+        background: #fff;
+        border-radius: 18px;
+        border: 1px solid rgba(17, 42, 64, 0.2);
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .stepper {
+        display: flex;
+        gap: 8px;
+        margin: 10px 0;
+      }
+
+      .step {
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: #edf5fb;
+        font-size: 12px;
+      }
+
+      .step.active {
+        background: #cff0e6;
+        color: #0a755f;
+        font-weight: 700;
+      }
+
+      .layout2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .feedback {
+        background: #f4fcf8;
+        border: 1px solid #c6f0df;
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: #0f735e;
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .stats,
+        .grid4,
+        .grid3,
+        .dashboard,
+        .filters,
+        .layout2,
+        .weekbar {
+          grid-template-columns: 1fr;
+        }
+
+        .menu {
+          gap: 8px;
+        }
+
+        .week-grid {
+          grid-template-columns: repeat(7, 164px);
+        }
+
+        .day-column {
+          min-width: 164px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap nav">
+        <div class="brand">
+          <div class="logo">TOGA</div>
+          <strong>TOGA Wellness</strong>
+        </div>
+        <nav class="menu">
+          <a href="#schedule">Schedule</a>
+          <a href="#services">Services</a>
+          <a href="#instructors">Instructors</a>
+          <a href="#packages">Packages</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#about">About</a>
+        </nav>
+        <div class="cta">
+          <a class="button outline" href="#login">Login</a>
+          <a class="button primary" href="#register">Daftar</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="wrap hero">
+          <div class="hero-card">
+            <span class="badge">Wellness Service + Booking</span>
+            <h1>Personalize your weekly healing journey</h1>
+            <p>
+              TOGA adalah platform wellness untuk Yoga, Herbal Therapy, Meditation, dan Breathwork
+              dengan fokus pada jadwal, instruktur, lokasi, dan profile kesehatan user.
+            </p>
+            <div class="chip-wrap">
+              <span class="chip">Profile kesehatan</span>
+              <span class="chip">Wellness Notes</span>
+              <span class="chip">Waitlist otomatis</span>
+              <span class="chip">Progress tracker</span>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 14px">
+              <a href="#schedule" class="button primary">Lihat Jadwal</a>
+              <a href="#packages" class="button outline">Booking Sekarang</a>
+            </div>
+          </div>
+
+          <div>
+            <div class="stats">
+              <article class="stat" style="animation-delay: 0.1s">
+                <h3>120+</h3>
+                <p class="muted2">Sesi per minggu</p>
+              </article>
+              <article class="stat" style="animation-delay: 0.2s">
+                <h3>18</h3>
+                <p class="muted2">Instruktur aktif</p>
+              </article>
+              <article class="stat" style="animation-delay: 0.3s">
+                <h3>6</h3>
+                <p class="muted2">Lokasi studio</p>
+              </article>
+              <article class="stat" style="animation-delay: 0.4s">
+                <h3>4.9</h3>
+                <p class="muted2">Rating keseluruhan</p>
+              </article>
+            </div>
+            <p class="tiny" style="margin-top: 12px">
+              Reminder otomatis H-1 dan H-0 satu jam sebelum sesi.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="schedule" class="section">
+        <div class="wrap">
+          <div class="section-title">
+            <div>
+              <span class="badge">Discovery -> Schedule</span>
+              <h2>Jadwal Kelas / Sesi</h2>
+            </div>
+            <button id="openFlow" class="button outline">Lihat alur booking</button>
+          </div>
+
+          <p class="muted2">
+            Filter hari, layanan, lokasi, dan instruktur, lalu klik Book Sekarang untuk lanjut.
+          </p>
+          <div class="weekbar">
+            <button id="prevWeek" class="button outline">&lt;</button>
+            <strong id="weekLabel">Minggu Ini: 28 Apr - 4 Mei 2026</strong>
+            <button id="nextWeek" class="button outline">&gt;</button>
+          </div>
+          <div class="filters">
+            <select id="filterDay">
+              <option value="all">Semua Hari</option>
+              <option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option>
+            </select>
+            <select id="filterService">
+              <option value="all">Semua Layanan</option>
+              <option>Yoga</option><option>Herbal Therapy</option><option>Meditation</option><option>Breathwork</option>
+            </select>
+            <select id="filterLocation">
+              <option value="all">Semua Lokasi</option>
+              <option>Studio A - Kuningan</option><option>Studio B - Kuningan</option><option>Outdoor Bali Garden</option><option>Rooftop Garden</option>
+            </select>
+            <select id="filterInstructor">
+              <option value="all">Semua Instruktur</option>
+              <option>Toriq</option><option>Sari</option><option>Rina</option><option>Irmabelle</option><option>Fikri</option>
+            </select>
+            <button id="resetFilter" class="button outline">Reset</button>
+          </div>
+          <div class="week-scroll">
+            <div id="weekGrid" class="week-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section">
+        <div class="wrap">
+          <span class="badge">Services</span>
+          <h2>Layanan</h2>
+          <div class="grid4">
+            <article class="card" style="animation-delay:0.1s">
+              <h3>Yoga</h3>
+              <p class="muted2">Flow, Yin, Hatha untuk relaksasi, mobilitas, dan stress management.</p>
+            </article>
+            <article class="card" style="animation-delay:0.2s">
+              <h3>Herbal Therapy</h3>
+              <p class="muted2">Terapi herbal ringan untuk pemulihan harian dan detoksikasi.</p>
+            </article>
+            <article class="card" style="animation-delay:0.3s">
+              <h3>Meditation</h3>
+              <p class="muted2">Sesi guided breath + visual untuk kualitas tidur dan fokus.</p>
+            </article>
+            <article class="card" style="animation-delay:0.4s">
+              <h3>Breathwork</h3>
+              <p class="muted2">Teknik napas terstruktur berdasarkan tujuan tubuh dan level.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="packages" class="section">
+        <div class="wrap">
+          <span class="badge">Packages & Pricing</span>
+          <div class="section-title">
+            <h2>Paket & Harga</h2>
+            <p class="muted2">Saldo paket dapat dipakai untuk booking sesi berikutnya.</p>
+          </div>
+          <div class="grid4">
+            <article class="card" style="animation-delay:0.1s">
+              <h3>Drop-in 1x</h3>
+              <p class="muted2">Rp 120.000</p>
+            </article>
+            <article class="card" style="animation-delay:0.2s">
+              <h3>Bundle 5x</h3>
+              <p class="muted2">Rp 550.000</p>
+            </article>
+            <article class="card" style="animation-delay:0.3s">
+              <h3>Bundle 10x</h3>
+              <p class="muted2">Rp 990.000</p>
+            </article>
+            <article class="card" style="animation-delay:0.4s">
+              <h3>Membership Bulanan</h3>
+              <p class="muted2">Rp 1.800.000</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="instructors" class="section">
+        <div class="wrap">
+          <span class="badge">Practitioners</span>
+          <h2>Instructors</h2>
+          <div class="grid3">
+            <article class="card">
+              <h3>Toriq</h3>
+              <p class="muted2">Yoga & Detox</p>
+              <p>Hatha Flow, Yin Yoga, dan teknik relaksasi pagi.</p>
+              <p class="tiny">Sertifikasi: Yoga Alliance 500h</p>
+              <button class="button outline" data-profile="Toriq">Lihat Jadwal Instruktur</button>
+            </article>
+            <article class="card">
+              <h3>Sari</h3>
+              <p class="muted2">Herbal Therapy</p>
+              <p>Detoks ringan dan herbal plan untuk pemulihan metabolik.</p>
+              <p class="tiny">Sertifikasi: Traditional Wellness</p>
+              <button class="button outline" data-profile="Sari">Lihat Jadwal Instruktur</button>
+            </article>
+            <article class="card">
+              <h3>Irmabelle</h3>
+              <p class="muted2">Meditation & Breathwork</p>
+              <p>Specialist untuk anxiety regulation, tidur, dan relaksasi.</p>
+              <p class="tiny">Sertifikasi: Clinical Wellness Coach</p>
+              <button class="button outline" data-profile="Irmabelle">Lihat Jadwal Instruktur</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="section">
+        <div class="wrap">
+          <span class="badge">User Dashboard</span>
+          <h2>Dasbor Member</h2>
+          <div class="dashboard">
+            <article class="card">
+              <h3>Booking Mendatang</h3>
+              <ul class="list">
+                <li>Senin, 28 Apr - Yoga Hatha Morning Flow (Studio A - Kuningan)</li>
+                <li>Rabu, 30 Apr - Herbal Detox Reset (Studio B - Kuningan)</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Saldo Paket</h3>
+              <p class="muted2">Bundle 5x: <strong>2 sesi tersisa</strong></p>
+              <p class="muted2">Membership: <strong>aktif</strong> (26 hari)</p>
+            </article>
+          </div>
+          <div class="dashboard" style="margin-top: 12px">
+            <article class="card">
+              <h3>Riwayat Sesi</h3>
+              <ul class="list">
+                <li>Breathwork 20 Apr - 60 menit</li>
+                <li>Yin Yoga 18 Apr - 50 menit</li>
+                <li>Herbal Therapy 14 Apr - 45 menit</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Progress Tracker</h3>
+              <p class="muted2">Sesi selesai: <strong>8 sesi</strong></p>
+              <p class="muted2">Streak: <strong>5 hari</strong></p>
+              <p class="muted2">Milestone: kamu sudah 10x Yoga!</p>
+              <div class="feedback" style="margin-top: 10px">
+                Sistem menyarankan sesi relaksasi malam 2x untuk menurunkan stress level.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="wrap">
+          <span class="badge">TOGA Specific Features</span>
+          <h2>Fitur Diferensiasi</h2>
+          <div class="grid4">
+            <article class="card"><h3>Wellness Profile</h3><p class="muted2">Input kondisi fisik dan tujuan personal.</p></article>
+            <article class="card"><h3>Therapy Notes</h3><p class="muted2">Catatan praktisi setelah sesi tercatat di akun user.</p></article>
+            <article class="card"><h3>Waitlist Otomatis</h3><p class="muted2">Penuh, user langsung masuk antrean dan notifikasi.</p></article>
+            <article class="card"><h3>Gift a Session</h3><p class="muted2">Beli sesi sebagai hadiah personal.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <h2>Contact & Lokasi</h2>
+          <div class="card">
+            <p class="muted2">Email: hello@toga.wellness</p>
+            <p class="muted2">WA: +62 812 9999 0000</p>
+            <p class="muted2">Alamat: TOGA Wellness Hub, Jl. Kuningan Barat</p>
+            <p class="tiny">Notifikasi: WhatsApp API + SMTP email</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="foot-inner">
+        <p>(c) TOGA Wellness Mockup</p>
+        <p>Demo product UI</p>
+      </div>
+    </footer>
+
+    <div class="overlay" id="overlay">
+      <div class="drawer">
+        <div class="section-title">
+          <div>
+            <h2 id="modalTitle">Detail Sesi</h2>
+            <p class="tiny" id="modalSub" style="margin: 0;"></p>
+          </div>
+          <button id="closeModal" class="button outline">Tutup</button>
+        </div>
+        <div class="stepper">
+          <span class="step active">1. Detail</span>
+          <span class="step" id="step2">2. Booking</span>
+          <span class="step" id="step3">3. Pembayaran</span>
+          <span class="step" id="step4">4. Konfirmasi</span>
+        </div>
+        <p id="sessionDesc" class="muted2"></p>
+        <div class="layout2">
+          <label class="field">
+            <span class="tiny">Nama user</span>
+            <input type="text" placeholder="Nama lengkap" />
+          </label>
+          <label class="field">
+            <span class="tiny">Mode</span>
+            <select>
+              <option>Login</option>
+              <option>Register</option>
+              <option>Guest checkout</option>
+            </select>
+          </label>
+        </div>
+        <div class="layout2">
+          <div>
+            <p class="tiny">Metode pembayaran</p>
+            <label><input type="radio" name="pay" checked /> Transfer bank</label><br />
+            <label><input type="radio" name="pay" /> E-wallet (GoPay, OVO, QRIS)</label><br />
+            <label><input type="radio" name="pay" /> Potong saldo paket</label>
+          </div>
+          <label>
+            <span class="tiny">Catatan wellness (opsional)</span>
+            <textarea id="notes" style="width:100%; min-height: 75px; padding: 10px; border: 1px solid rgba(17, 42, 64, 0.2); border-radius: 10px; font: inherit;">Goal: relaksasi, detox</textarea>
+          </label>
+        </div>
+        <div id="confirmArea" class="feedback hidden">
+          <p><strong>Booking diproses (simulasi)</strong>, konfirmasi akan dikirim ke email dan reminder WhatsApp.</p>
+          <p class="tiny">Google Calendar dapat ditambahkan secara opsional.</p>
+        </div>
+        <div class="section-title" style="margin-top: 12px">
+          <span>
+            <button id="waitlistBtn" class="button outline">Waitlist</button>
+            <button id="bookNextBtn" class="button primary">Lanjutkan Booking</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const sessions = [
+        { id: 1, title: 'Yoga Hatha Morning Flow', day: 'Senin', slot: 'morning', time: '06:30 - 07:30', instructor: 'Toriq', location: 'Studio A - Kuningan', service: 'Yoga', quota: 8, status: 'Tersedia', desc: 'Pemanasan dan aliran dinamis untuk memulai hari.' },
+        { id: 2, title: 'Herbal Detox Reset', day: 'Senin', slot: 'morning', time: '07:00 - 08:00', instructor: 'Sari', location: 'Studio B - Kuningan', service: 'Herbal Therapy', quota: 0, status: 'Penuh', desc: 'Terapi herbal ringan untuk detoks harian.' },
+        { id: 3, title: 'Yin Yoga Deep Calm', day: 'Rabu', slot: 'morning', time: '08:10 - 09:00', instructor: 'Rina', location: 'Rooftop Garden', service: 'Yoga', quota: 3, status: 'Hampir penuh', desc: 'Sesi restorative untuk menurunkan ketegangan otot.' },
+        { id: 4, title: 'Breath Reset', day: 'Rabu', slot: 'afternoon', time: '12:00 - 12:45', instructor: 'Fikri', location: 'Studio A - Kuningan', service: 'Breathwork', quota: 6, status: 'Tersedia', desc: 'Latihan pernapasan terarah untuk pemulihan fokus kerja.' },
+        { id: 5, title: 'Yin Yoga Sore', day: 'Kamis', slot: 'evening', time: '17:45 - 18:45', instructor: 'Irmabelle', location: 'Kuningan City', service: 'Yoga', quota: 3, status: 'Hampir penuh', desc: 'Mengendurkan punggung dan area leher yang tegang.' },
+        { id: 6, title: 'Meditation Deep Sleep', day: 'Jumat', slot: 'evening', time: '19:00 - 20:00', instructor: 'Irmabelle', location: 'Outdoor Bali Garden', service: 'Meditation', quota: 5, status: 'Tersedia', desc: 'Relaksasi terdalam untuk kualitas tidur yang baik.' },
+      ];
+
+      const weekGrid = document.getElementById('weekGrid');
+
+      const weekDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+      const slotTimeLabel = {
+        morning: 'Pagi',
+        afternoon: 'Siang',
+        evening: 'Sore',
+        night: 'Malam',
+      };
+      const MAX_SESSIONS_PER_DAY = 3;
+      let weekDates = [];
+
+      const filters = {
+        day: document.getElementById('filterDay'),
+        service: document.getElementById('filterService'),
+        location: document.getElementById('filterLocation'),
+        instructor: document.getElementById('filterInstructor'),
+      };
+
+      const overlay = document.getElementById('overlay');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSub = document.getElementById('modalSub');
+      const sessionDesc = document.getElementById('sessionDesc');
+      const confirmArea = document.getElementById('confirmArea');
+      const step2 = document.getElementById('step2');
+      const step3 = document.getElementById('step3');
+      const step4 = document.getElementById('step4');
+      const weekLabel = document.getElementById('weekLabel');
+      const notes = document.getElementById('notes');
+      const prevWeek = document.getElementById('prevWeek');
+      const nextWeek = document.getElementById('nextWeek');
+
+      function slotClass(status) {
+        if (status === 'Tersedia') return 'ok';
+        if (status === 'Hampir penuh') return 'half';
+        return 'full';
+      }
+
+      function statusText(status) {
+        if (status === 'Tersedia') return 'Tersedia';
+        if (status === 'Hampir penuh') return 'Hampir penuh';
+        return 'Penuh';
+      }
+
+      function render() {
+        weekGrid.innerHTML = '';
+        const sel = {
+          day: filters.day.value,
+          service: filters.service.value,
+          location: filters.location.value,
+          instructor: filters.instructor.value,
+        };
+
+        const items = sessions
+          .filter((s) => sel.day === 'all' || s.day === sel.day)
+          .filter((s) => sel.service === 'all' || s.service === sel.service)
+          .filter((s) => sel.location === 'all' || s.location === sel.location)
+          .filter((s) => sel.instructor === 'all' || s.instructor === sel.instructor);
+
+        const byDay = new Map(weekDays.map((day) => [day, []]));
+        items.forEach((session) => {
+          const list = byDay.get(session.day);
+          if (list) {
+            list.push(session);
+          }
+        });
+
+        weekDays.forEach((day, dayIndex) => {
+          const card = document.createElement('article');
+          card.className = 'card day-column';
+          const daySessionList = byDay.get(day) || [];
+          const shortDate = weekDates[dayIndex] || '';
+          const visibleSessions = daySessionList.slice(0, MAX_SESSIONS_PER_DAY);
+          const hasMore = daySessionList.length > MAX_SESSIONS_PER_DAY;
+
+          let html = `
+            <h3 class="day-title">
+              ${day}
+              <span class="day-date">${shortDate}</span>
+            </h3>
+          `;
+
+          if (daySessionList.length === 0) {
+            html += `
+              <div class="day-sessions">
+                <p class="muted2">Tidak ada sesi hari ini.</p>
+              </div>
+            `;
+          } else {
+            html += '<div class="day-sessions">';
+            visibleSessions.forEach((s) => {
+              html += `
+                <article class="session-card">
+                  <div class="session-top">
+                    <span class="tiny">${slotTimeLabel[s.slot]} - ${s.time}</span>
+                    <span class="status ${slotClass(s.status)}">${statusText(s.status)}</span>
+                  </div>
+                  <h3>${s.title}</h3>
+                  <p class="muted2">${s.service} | ${s.instructor}</p>
+                  <p class="muted2">${s.location}</p>
+                  <p class="muted2">${s.quota} slot tersisa</p>
+                  <button class="button ${s.quota > 0 ? 'primary' : 'outline'}" data-id="${s.id}">
+                    ${s.quota > 0 ? 'Book Sekarang' : 'Waitlist'}
+                  </button>
+                </article>
+              `;
+            });
+
+            if (hasMore) {
+              html += `<p class="tiny muted">+ ${daySessionList.length - MAX_SESSIONS_PER_DAY} sesi lainnya</p>`;
+            }
+            html += '</div>';
+          }
+
+          card.innerHTML = html;
+          weekGrid.appendChild(card);
+        });
+
+        document.querySelectorAll('[data-id]').forEach((btn) => {
+          btn.addEventListener('click', (evt) => {
+            const id = Number(evt.currentTarget.dataset.id);
+            openSession(id);
+          });
+        });
+      }
+
+      function openSession(id) {
+        const session = sessions.find((s) => s.id === id);
+        if (!session) return;
+        modalTitle.textContent = session.title;
+        modalSub.textContent = `${session.day} - ${session.time} - ${session.instructor} - ${session.location}`;
+        sessionDesc.textContent = session.desc + ' | Status: ' + session.status + '.';
+        step2.classList.add('active');
+        step3.classList.remove('active');
+        step4.classList.remove('active');
+        confirmArea.classList.add('hidden');
+        overlay.classList.add('open');
+      }
+
+      function resetSteps() {
+        step2.classList.remove('active');
+        step3.classList.remove('active');
+        step4.classList.remove('active');
+      }
+
+      Object.values(filters).forEach((el) => el.addEventListener('change', render));
+      document.getElementById('resetFilter').addEventListener('click', () => {
+        filters.day.value = 'all';
+        filters.service.value = 'all';
+        filters.location.value = 'all';
+        filters.instructor.value = 'all';
+        render();
+      });
+
+      document.getElementById('closeModal').addEventListener('click', () => overlay.classList.remove('open'));
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) overlay.classList.remove('open');
+      });
+
+      document.getElementById('bookNextBtn').addEventListener('click', () => {
+        step3.classList.add('active');
+        setTimeout(() => {
+          step4.classList.add('active');
+          confirmArea.classList.remove('hidden');
+        }, 450);
+      });
+
+      document.getElementById('waitlistBtn').addEventListener('click', () => {
+        alert('Sukses masuk daftar waitlist. Kami akan kirim notifikasi jika ada slot yang kosong.');
+      });
+
+      document.getElementById('openFlow').addEventListener('click', () => openSession(sessions[0].id));
+
+      document.querySelectorAll('[data-profile]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const name = btn.dataset.profile;
+          alert(name + ': profil menampilkan bio, sertifikasi, rating, dan jadwal mengajar minggu ini.');
+        });
+      });
+
+      let weekOffset = 0;
+      const baseDate = new Date(2026, 3, 28);
+
+      function fmtDate(dt) {
+        return `${dt.getDate()} ${dt.toLocaleString('en-US', { month: 'short' })}`;
+      }
+
+      function renderWeek() {
+        const start = new Date(baseDate);
+        start.setDate(baseDate.getDate() + weekOffset * 7);
+        const end = new Date(start);
+        end.setDate(start.getDate() + 6);
+        weekDates = [];
+        const current = new Date(start);
+        for (let i = 0; i < 7; i += 1) {
+          weekDates.push(fmtDate(current));
+          current.setDate(current.getDate() + 1);
+        }
+        weekLabel.textContent = `Minggu Ini: ${fmtDate(start)} - ${fmtDate(end)} 2026`;
+      }
+
+      prevWeek.addEventListener('click', () => {
+        weekOffset -= 1;
+        renderWeek();
+        render();
+      });
+
+      nextWeek.addEventListener('click', () => {
+        weekOffset += 1;
+        renderWeek();
+        render();
+      });
+
+      renderWeek();
+      render();
+      notes.value = 'Goal: relaksasi, detox';
+    </script>
+  </body>
+</html>
